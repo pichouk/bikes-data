@@ -1,0 +1,11 @@
+{
+  "influxdb": {
+    "url": "https://my.influxdb.tld",
+    "user": "writeuser",
+    "password": "writepassword",
+    "database": "databasename"
+  },
+  "api": {
+    "key": "YOURAPIKEY"
+  }
+}
