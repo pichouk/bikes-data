@@ -7,6 +7,7 @@
 import sys
 import os
 import json
+import datetime
 from urllib.parse import urlparse
 from influxdb import InfluxDBClient
 from jcdecaux import JCDecauxDriver
@@ -86,6 +87,7 @@ def main():
     metrics = []
 
     # Get all Velo'v stations
+    current_timestamp = int(datetime.datetime.now().timestamp()*1000)
     stations = api.get_stations(CONTRACT_NAME)
     for station in stations:
         # Extract some data about the station
@@ -99,9 +101,10 @@ def main():
                 'measurement': 'bike_stands',
                 'tags': {
                     'name': station_name,
-                    'id': station_id
+                    'id': station_id,
+                    'last_updated': timestamp
                 },
-                'time': timestamp,
+                'time': current_timestamp,
                 'fields': {
                     'value': station['bike_stands']
                 }
@@ -113,9 +116,10 @@ def main():
                 'measurement': 'available_bike_stands',
                 'tags': {
                     'name': station_name,
-                    'id': station_id
+                    'id': station_id,
+                    'last_updated': timestamp
                 },
-                'time': timestamp,
+                'time': current_timestamp,
                 'fields': {
                     'value': station['available_bike_stands']
                 }
@@ -127,9 +131,10 @@ def main():
                 'measurement': 'available_bikes',
                 'tags': {
                     'name': station_name,
-                    'id': station_id
+                    'id': station_id,
+                    'last_updated': timestamp
                 },
-                'time': timestamp,
+                'time': current_timestamp,
                 'fields': {
                     'value': station['available_bikes']
                 }
